@@ -2,7 +2,6 @@
 
 {% load static %}
 
-
     <!-- Custom styles for this template -->
 {% block css %}
     <link href="{% static 'css/products.css' %}" rel="stylesheet">
@@ -66,7 +65,7 @@
                             <div class="card h-100">
                                 <a href="#">
                                     <img class="card-img-top"
-                                         src="{% static product.img %}"
+                                         src="/media/{{ product.image }}"
                                          alt="">
                                 </a>
                                 <div class="card-body">
