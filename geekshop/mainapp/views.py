@@ -1,13 +1,16 @@
 from django.shortcuts import render
+
 from .models import Product
 import os
 
 MODULE_DIR = os.path.dirname(__file__)
 
+
 # Create your views here.
 
 
 def index(request):
+
     context = {
         'title': 'geekshop-main',
     }
@@ -23,3 +26,4 @@ def products(request):
     #context['products'] = json.load(open(file_path, encoding='utf-8'))
     context['products'] = a
     return render(request, 'mainapp/products.html', context)
+
