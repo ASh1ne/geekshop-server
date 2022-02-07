@@ -42,3 +42,15 @@ class UserRegisterForm(UserCreationForm):
             raise forms.ValidationError('Вам необходимо подрасти!')
 
         return user_age
+
+    def clean_password1(self):
+        my_pass1=self.cleaned_data['password1']
+        if len(my_pass1) <= 2:
+            raise forms.ValidationError('Удлинните пароль!')
+        return my_pass1
+
+    def clean_password2(self):
+        my_pass2=self.cleaned_data['password2']
+        if len(my_pass2) != self.cleaned_data['password1']:
+            raise forms.ValidationError('Пароли не совпадают!')
+        return
