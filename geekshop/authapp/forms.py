@@ -22,7 +22,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username','email','first_name','last_name','password1','password2','age')
+        fields = ('username','email','first_name','last_name','password1','password2','age','image')
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
@@ -33,6 +33,7 @@ class UserRegisterForm(UserCreationForm):
         self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
         self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
         self.fields['age'].widget.attrs['placeholder'] = 'Введите возраст'
+        self.fields['image'].widget.attrs['placeholder'] = 'Загрузите фото'
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
@@ -51,6 +52,6 @@ class UserRegisterForm(UserCreationForm):
 
     def clean_password2(self):
         my_pass2=self.cleaned_data['password2']
-        if len(my_pass2) != self.cleaned_data['password1']:
+        if my_pass2 != self.cleaned_data['password1']:
             raise forms.ValidationError('Пароли не совпадают!')
         return
