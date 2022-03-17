@@ -1,6 +1,5 @@
-from django.contrib.auth import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django import forms
 from authapp.models import User
 
 
@@ -55,3 +54,23 @@ class UserRegisterForm(UserCreationForm):
         if my_pass2 != self.cleaned_data['password1']:
             raise forms.ValidationError('Пароли не совпадают!')
         return
+
+class UserProfilerForm(UserChangeForm):
+    image = forms.ImageField()
+
+    class Meta:
+        model = User
+        fields = ('username','email','first_name','last_name','password1','password2','age','image')
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
+        self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес электронной почты'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Введите имя'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Введите фамилию'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
+        self.fields['age'].widget.attrs['placeholder'] = 'Введите возраст'
+        self.fields['image'].widget.attrs['placeholder'] = 'Загрузите фото'
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control py-4'

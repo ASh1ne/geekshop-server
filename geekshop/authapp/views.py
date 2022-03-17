@@ -46,6 +46,12 @@ def register(request):
     }
     return render(request, 'authapp/register.html', context)
 
+def profile(reqest):
+    context = {
+        'title': 'Geekshop | Данные пользователя'
+    }
+    return render(reqest, 'authapp/register.html')
+
 def logout(request):
     auth.logout(request)
     return render(request, 'mainapp/index.html')
