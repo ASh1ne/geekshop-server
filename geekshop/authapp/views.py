@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm
+from baskets.models import Basket
 
 
 def login(request):
@@ -45,12 +46,21 @@ def register(request):
     }
     return render(request, 'authapp/register.html', context)
 
-def profile(reqest):
+def profile(request):
+
+    if request.method == 'POST':
+        form = UserProfilerForm(instance=request.user,data=request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+
     context = {
         'title': 'Geekshop | Данные пользователя',
-        'form': UserProfilerForm(instance=reqest.user)
+        'form': UserProfilerForm(instance=request.user),
+        'baskets': Basket.objects.filter(user=request.user)
     }
-    return render(reqest, 'authapp/profile.html', context)
+    return render(request, 'authapp/profile.html', context)
 
 def logout(request):
     auth.logout(request)
