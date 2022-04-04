@@ -71,3 +71,9 @@ class UserProfilerForm(UserChangeForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
+
+    def clean_age(self):
+        user_age = self.cleaned_data['age']
+        if user_age <= 25:
+            raise forms.ValidationError('Вам необходимо подрасти!')
+        return user_age
