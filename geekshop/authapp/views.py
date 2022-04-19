@@ -51,13 +51,12 @@ def profile(request):
     if request.method == 'POST':
         form = UserProfilerForm(instance=request.user,data=request.POST)
         if form.is_valid():
+            messages.set_level(request, messages.SUCCESS)
             messages.success(request,'Ваши данные изменены')
             form.save()
         else:
+            messages.set_level(request, messages.ERROR)
             messages.error(request, form.errors)
-
-
-
 
     context = {
         'title': 'Geekshop | Данные пользователя',
